@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./node
+      dockerfile: Dockerfile.prod
+    command: wait-for db:3306 -t 20 -- node src/index.js
+    container_name: app
+    networks:
+      - challenge
+
+  nginx:
+    build:
+      context: ./nginx
+    image: lucasoliveiracruz/nginx:prod
+    container_name: nginx
+    networks:
+      - challenge
+    ports:
+      - "8080:80"
+
+  db:
+    platform: linux/x86_64
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0
+    container_name: db
+    restart: always
+    tty: true
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=challengedb
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - challenge
+
+networks:
+  challenge:
+    driver: bridge

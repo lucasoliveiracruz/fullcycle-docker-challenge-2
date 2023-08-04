@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# NodeJS
+node_modules
+
+# mysql
+mysql/*
+!mysql/.gitkeep
+!mysql/schema.sql
