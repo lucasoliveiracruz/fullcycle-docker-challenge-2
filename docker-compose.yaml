@@ -5,7 +5,7 @@ services:
     build:
       context: ./node
       dockerfile: Dockerfile.prod
-    command: wait-for db:3306 -t 20 -- node src/index.js
+    command: wait-for db:3306 -t 20 -- npm run start-app
     container_name: app
     volumes:
       - ./node:/usr/src/app
