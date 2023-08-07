@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile.prod
     command: wait-for db:3306 -t 20 -- node src/index.js
     container_name: app
+    volumes:
+      - ./node:/usr/src/app
     networks:
       - challenge
 
